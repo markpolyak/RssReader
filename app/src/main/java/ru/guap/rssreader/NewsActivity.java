@@ -23,7 +23,7 @@ public class NewsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.registerReceiver(this.mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_news);
     }
 
     public void changeFragment (int code) {

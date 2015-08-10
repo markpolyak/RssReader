@@ -1,6 +1,7 @@
 package ru.guap.rssreader;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,13 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         NewsItem item = getItem(position);
         if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(
-                    R.layout.news_item, parent, false);
+                    R.layout.item_news, parent, false);
         }
 
-        TextView title = (TextView) view.findViewById(R.id.title);
+        Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/RobotoCondensed-Regular.ttf");
+        TextView title = (TextView) view.findViewById(R.id.item_text_view);
         title.setText(item.getTitle());
+        title.setTypeface(custom_font);
 
         return view;
     }
