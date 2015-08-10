@@ -1,18 +1,18 @@
 package ru.guap.rssreader;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-public class NewsActivity extends FragmentActivity {
+public class NewsActivity extends AppCompatActivity {
 
     private final static int NO_INTERNET = 1;
     private final static int NEWS_FEED = 2;
@@ -24,6 +24,8 @@ public class NewsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         this.registerReceiver(this.mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         setContentView(R.layout.activity_news);
+
+        getWindow().setBackgroundDrawable(null);
     }
 
     public void changeFragment (int code) {
