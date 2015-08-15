@@ -14,23 +14,33 @@ import java.util.ArrayList;
  * Created by MeatBoy on 29.07.2015.
  */
 public class NewsAdapter extends ArrayAdapter<NewsItem> {
+
     public NewsAdapter(Context context, ArrayList<NewsItem> news) {
         super(context, 0, news);
+    }
+
+    static class ViewHolderItem {
+        TextView mTextView;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        NewsItem item = getItem(position);
+        ViewHolderItem mViewHolder;
+
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(
-                    R.layout.item_news, parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.item_news, parent, false);
+
+            mViewHolder = new ViewHolderItem();
+            mViewHolder.mTextView = (TextView) view.findViewById(R.id.item_text_view);
+            mViewHolder.mTextView.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/RobotoCondensed-Regular.ttf"));
+
+            view.setTag(mViewHolder);
+        } else {
+            mViewHolder = (ViewHolderItem) view.getTag();
         }
 
-        Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/RobotoCondensed-Regular.ttf");
-        TextView title = (TextView) view.findViewById(R.id.item_text_view);
-        title.setText(item.getTitle());
-        title.setTypeface(custom_font);
+        mViewHolder.mTextView.setText(getItem(position).getTitle());
 
         return view;
     }

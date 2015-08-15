@@ -2,16 +2,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
-    android:layout_margin="@dimen/activity_horizontal_margin"
     android:orientation="vertical" >
 
     <ListView
         android:visibility="gone"
         android:id="@+id/listView"
         android:divider="@android:color/transparent"
-        android:dividerHeight="16dp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:smoothScrollbar="true"
+        android:scrollingCache="false"
+        android:animationCache="false" />
 
     <ProgressBar
         android:id="@+id/progressBar"

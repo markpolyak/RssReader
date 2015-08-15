@@ -9,6 +9,7 @@
         android:id="@+id/no_internet_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:text="@string/no_internet" />
 
 </LinearLayout>

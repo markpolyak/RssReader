@@ -43,7 +43,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         NewsAdapter adapter = (NewsAdapter) parent.getAdapter();
-        NewsItem item = (NewsItem) adapter.getItem(position);
+        NewsItem item = adapter.getItem(position);
         Uri uri = Uri.parse(item.getLink());
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
@@ -64,12 +64,11 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
                 NewsAdapter adapter = new NewsAdapter(getActivity(), items);
                 listView.setAdapter(adapter);
             } else {
-                Toast.makeText(getActivity(), "Возникла проблема при загрузке RSS ленты",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Возникла проблема при загрузке RSS ленты", Toast.LENGTH_LONG).show();
             }
             progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-        };
+        }
     };
 
 }
