@@ -8,16 +8,20 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by MeatBoy on 30.07.2015.
  */
 public class RssParser {
 
-    private final String ns = null;
+    final String ns = null;
+    final String fTitle = "title";
+    final String fLink = "link";
+    final String fDescription = "description";
+    final String fPubDate = "pubDate";
+    final String fCreator = "dc:creator";
 
-    public List<NewsItem> parse(InputStream inputStream) throws XmlPullParserException, IOException {
+    public ArrayList<NewsItem> parse(InputStream inputStream) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -29,42 +33,54 @@ public class RssParser {
         }
     }
 
-    private List<NewsItem> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private ArrayList<NewsItem> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, null, "rss");
         String title = null;
         String link = null;
-        List<NewsItem> items = new ArrayList<NewsItem>();
+        String description = null;
+        String pubDate = null;
+        String creator = null;
+        boolean lock = true;
+        ArrayList<NewsItem> items = new ArrayList<>();
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
-            String name = parser.getName();
-            if (name.equals("title")) {
-                title = readTitle(parser);
-            } else if (name.equals("link")) {
-                link = readLink(parser);
+            if (!lock) {
+                switch (parser.getName()) {
+                    case "title":
+                        title = readTag(parser, fTitle);
+                        break;
+                    case "link":
+                        link = readTag(parser, fLink);
+                        break;
+                    case "description":
+                        description = readTag(parser, fDescription);
+                        break;
+                    case "pubDate":
+                        pubDate = readTag(parser, fPubDate);
+                        break;
+                    case "dc:creator":
+                        creator = readTag(parser, fCreator);
+                        break;
+                }
+            } else {
+                String name = parser.getName();
+                if (name.equals("item"))
+                    lock = false;
             }
-            if (title != null && link != null) {
-                NewsItem item = new NewsItem(title, link);
-                items.add(item);
-                title = null;
-                link = null;
+            if (title != null && link != null && description != null && pubDate != null && creator != null) {
+                items.add(new NewsItem(title, link, description, pubDate, creator));
+                title = link = description = pubDate = creator = null;
             }
         }
         return items;
     }
 
-    private String readLink(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "link");
-        String link = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "link");
-        return link;
-    }
-
-    private String readTitle(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "title");
+    private String readTag(XmlPullParser parser, String tag) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, tag);
         String title = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "title");
+        parser.require(XmlPullParser.END_TAG, ns, tag);
         return title;
     }
 

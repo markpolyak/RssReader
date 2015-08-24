@@ -7,10 +7,16 @@ public class NewsItem {
 
     private String mTitle;
     private String mLink;
+    private String mDescription;
+    private String mPubDate;
+    private String mCreator;
 
-    public NewsItem(String title, String link) {
+    public NewsItem(String title, String link, String description, String pubDate, String creator) {
         mTitle = title;
         mLink = link;
+        mDescription = description;
+        mPubDate = pubDate;
+        mCreator = creator;
     }
 
     public String getTitle() {
@@ -19,6 +25,18 @@ public class NewsItem {
 
     public String getLink() {
         return mLink;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getPubDate() {
+        return mPubDate;
+    }
+
+    public String getCreator() {
+        return mCreator;
     }
 
 }

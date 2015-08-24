@@ -6,7 +6,8 @@
     <string name="title_section3">Section 3</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_news">Новости</string>
+    <string name="title_activity_news">Новости Купчино</string>
+    <string name="detail_view_button_text">Подробнее</string>
 
     <string name="no_internet">Отсутствует подключение к интернету</string>
 </resources>

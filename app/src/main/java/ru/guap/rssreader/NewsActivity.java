@@ -7,15 +7,26 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.util.ArrayList;
+
 public class NewsActivity extends AppCompatActivity {
 
-    private final static int NO_INTERNET = 1;
-    private final static int NEWS_FEED = 2;
+    public final static int NO_INTERNET = 0;
+    public final static int NEWS_FEED = 1;
+    public final static int DETAIL_VIEW = 2;
+
+    private Fragment mNewsFeed;
+    private Fragment mDetailView;
 
     private boolean hasData = false;
+    private int position;
+    private NewsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +52,36 @@ public class NewsActivity extends AppCompatActivity {
                 break;
 
             case NEWS_FEED:
-                transaction.replace(R.id.activity_container, new NewsFragment()).commit();
+                if (mNewsFeed == null)
+                    mNewsFeed = new NewsFragment();
+                transaction.replace(R.id.activity_container, mNewsFeed).commit();
+                break;
+
+            case DETAIL_VIEW:
+                if (mDetailView == null)
+                    mDetailView = new DetailNewsFragment();
+
+                ArrayList<String> items = new ArrayList<>();
+
+                String desc = adapter.getItem(position).getDescription();
+                desc = StringEscapeUtils.unescapeHtml4(desc);
+                desc = desc.replaceAll("\r", "");
+                desc = desc.replaceAll("\n", "");
+                desc = desc.replaceAll("\t", "");
+                String s = desc.substring(desc.indexOf("alt=") + 5, desc.indexOf("\" width"));
+                items.add(s);
+                s = desc.substring(desc.indexOf("</div>") + 6, desc.length());
+                items.add(s);
+                items.add(adapter.getItem(position).getCreator());
+                desc = adapter.getItem(position).getPubDate();
+                desc = desc.substring(5, desc.length() - 6);
+                items.add(desc);
+
+                Bundle args = new Bundle();
+                args.putInt("news_pos", position);
+                args.putSerializable("details_adapter", new DetailsAdapter(this, items));
+                mDetailView.setArguments(args);
+                transaction.replace(R.id.activity_container, mDetailView, "details_view").commit();
                 break;
         }
     }
@@ -59,5 +99,26 @@ public class NewsActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void setAdapter(NewsAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    public NewsAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void onBackPressed() {
+        DetailNewsFragment myFragment = (DetailNewsFragment) getSupportFragmentManager().findFragmentByTag("details_view");
+        if (myFragment != null && myFragment.isVisible()) {
+            changeFragment(NEWS_FEED);
+        } else {
+            finish();
+        }
+    }
 
 }

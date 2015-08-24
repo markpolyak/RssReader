@@ -1,7 +1,7 @@
 package ru.guap.rssreader;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -34,19 +34,20 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
             listView.setOnItemClickListener(this);
             startService();
         } else {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            parent.removeView(view);
+            if (Build.VERSION.SDK_INT <= 10) {
+                ViewGroup parent = (ViewGroup) view.getParent();
+                parent.removeView(view);
+            }
+
         }
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        NewsAdapter adapter = (NewsAdapter) parent.getAdapter();
-        NewsItem item = adapter.getItem(position);
-        Uri uri = Uri.parse(item.getLink());
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        NewsActivity act = ((NewsActivity) getActivity());
+        act.setPosition(position);
+        act.changeFragment(NewsActivity.DETAIL_VIEW);
     }
 
     private void startService() {
@@ -62,6 +63,7 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
             ArrayList<NewsItem> items = (ArrayList<NewsItem>) resultData.getSerializable(RssService.ITEMS);
             if (items != null) {
                 NewsAdapter adapter = new NewsAdapter(getActivity(), items);
+                ((NewsActivity) getActivity()).setAdapter(adapter);
                 listView.setAdapter(adapter);
             } else {
                 Toast.makeText(getActivity(), "Возникла проблема при загрузке RSS ленты", Toast.LENGTH_LONG).show();

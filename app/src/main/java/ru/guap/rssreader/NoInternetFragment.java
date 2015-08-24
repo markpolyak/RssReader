@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class NoInternetFragment extends Fragment {
 
-    private TextView textView;
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
