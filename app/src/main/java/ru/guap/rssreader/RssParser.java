@@ -28,7 +28,7 @@ public class RssParser {
     final String fCreator = "dc:creator";
 
     final DateFormat fOldDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss", Locale.ENGLISH);
-    final DateFormat fNewDateFormat = new SimpleDateFormat("kk:mm:ss  dd.MM.yyyy", Locale.ENGLISH);
+    final DateFormat fNewDateFormat = new SimpleDateFormat("kk:mm  dd.MM.yyyy", Locale.ENGLISH);
 
     public ArrayList<NewsItem> parse(InputStream inputStream) throws XmlPullParserException, IOException {
         try {
