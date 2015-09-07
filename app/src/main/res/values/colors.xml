@@ -1,6 +1,7 @@
 <resources>
 
-    <color name="text_color">#455a64</color>
+    <color name="text_color">#455A64</color>
     <color name="button_color">#26A69A</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

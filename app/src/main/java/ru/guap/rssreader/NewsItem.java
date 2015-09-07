@@ -7,13 +7,15 @@ public class NewsItem {
 
     private String mTitle;
     private String mLink;
+    private String mDescriptionTitle;
     private String mDescription;
     private String mPubDate;
     private String mCreator;
 
-    public NewsItem(String title, String link, String description, String pubDate, String creator) {
+    public NewsItem(String title, String link, String descriptionTitle, String description, String pubDate, String creator) {
         mTitle = title;
         mLink = link;
+        mDescriptionTitle = descriptionTitle;
         mDescription = description;
         mPubDate = pubDate;
         mCreator = creator;
@@ -39,4 +41,7 @@ public class NewsItem {
         return mCreator;
     }
 
+    public String getDescriptionTitle() {
+        return mDescriptionTitle;
+    }
 }

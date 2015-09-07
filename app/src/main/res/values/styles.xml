@@ -1,6 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="@style/Theme.AppCompat">
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
 </resources>

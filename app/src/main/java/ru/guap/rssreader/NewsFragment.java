@@ -38,16 +38,15 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
                 ViewGroup parent = (ViewGroup) view.getParent();
                 parent.removeView(view);
             }
-
         }
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        NewsActivity act = ((NewsActivity) getActivity());
-        act.setPosition(position);
-        act.changeFragment(NewsActivity.DETAIL_VIEW);
+        Intent i = new Intent(getActivity(), DetailsActivity.class);
+        i.putExtra("pos", position);
+        startActivity(i);
     }
 
     private void startService() {
@@ -62,14 +61,15 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             ArrayList<NewsItem> items = (ArrayList<NewsItem>) resultData.getSerializable(RssService.ITEMS);
             if (items != null) {
+                News.get(getActivity().getApplicationContext()).setNews(items);
                 NewsAdapter adapter = new NewsAdapter(getActivity(), items);
-                ((NewsActivity) getActivity()).setAdapter(adapter);
                 listView.setAdapter(adapter);
             } else {
                 Toast.makeText(getActivity(), "Возникла проблема при загрузке RSS ленты", Toast.LENGTH_LONG).show();
             }
             progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
+            getActivity().stopService(new Intent(getActivity(), RssService.class));
         }
     };
 
