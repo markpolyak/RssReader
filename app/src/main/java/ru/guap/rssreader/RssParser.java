@@ -27,6 +27,10 @@ public class RssParser {
     final String fPubDate = "pubDate";
     final String fCreator = "dc:creator";
 
+    final String fDescriptionTitleStartTag = "alt=\"";
+    final String fDescriptionTitleFinishTag = "\" width";
+    final String fDescriptionStartTag = "</div>";
+
     final DateFormat fOldDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss", Locale.ENGLISH);
     final DateFormat fNewDateFormat = new SimpleDateFormat("kk:mm  dd.MM.yyyy", Locale.ENGLISH);
 
@@ -53,31 +57,35 @@ public class RssParser {
         boolean lock = true;
         ArrayList<NewsItem> items = new ArrayList<>();
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
+
+            if (parser.getEventType() != XmlPullParser.START_TAG)
                 continue;
-            }
+
             if (!lock) {
                 switch (parser.getName()) {
-                    case "title":
+
+                    case fTitle:
                         title = readTag(parser, fTitle);
                         break;
 
-                    case "link":
+                    case fLink:
                         link = readTag(parser, fLink);
                         break;
 
-                    case "description":
+                    case fDescription:
                         description = readTag(parser, fDescription);
 
                         description = StringEscapeUtils.unescapeHtml4(description);
                         description = description.replaceAll("\r", "");
                         description = description.replaceAll("\n", "");
                         description = description.replaceAll("\t", "");
-                        descriptionTitle = description.substring(description.indexOf("alt=") + 5, description.indexOf("\" width"));
-                        description = description.substring(description.indexOf("</div>") + 6, description.length());
+                        descriptionTitle = description.substring(description.indexOf(fDescriptionTitleStartTag) + fDescriptionTitleStartTag.length(),
+                                description.indexOf(fDescriptionTitleFinishTag));
+                        description = description.substring(description.indexOf(fDescriptionStartTag) + fDescriptionStartTag.length(),
+                                description.length());
                         break;
 
-                    case "pubDate":
+                    case fPubDate:
                         pubDate = readTag(parser, fPubDate);
 
                         Date d = null;
@@ -89,18 +97,18 @@ public class RssParser {
                         pubDate = fNewDateFormat.format(d);
                         break;
 
-                    case "dc:creator":
+                    case fCreator:
                         creator = readTag(parser, fCreator);
                         break;
                 }
             } else {
-                String name = parser.getName();
-                if (name.equals("item"))
+                if (parser.getName().equals("item"))
                     lock = false;
             }
-            if (title != null && link != null && description != null && pubDate != null && creator != null) {
+
+            if (title != null && link != null && descriptionTitle != null && description != null && pubDate != null && creator != null) {
                 items.add(new NewsItem(title, link, descriptionTitle, description, pubDate, creator));
-                title = link = description = pubDate = creator = null;
+                title = link = descriptionTitle = description = pubDate = creator = null;
             }
         }
         return items;

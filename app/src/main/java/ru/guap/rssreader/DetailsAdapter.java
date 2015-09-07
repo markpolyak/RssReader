@@ -1,7 +1,6 @@
 package ru.guap.rssreader;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class DetailsAdapter extends ArrayAdapter<String> implements Serializable
 
             mViewHolder = new ViewHolder();
             mViewHolder.mTitle = (TextView) view.findViewById(R.id.textView);
-            mViewHolder.mTitle.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/RobotoCondensed-Regular.ttf"));
+            mViewHolder.mTitle.setTypeface(BaseActivity.getDefaultFont());
 
             view.setTag(mViewHolder);
         } else {

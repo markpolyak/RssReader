@@ -60,13 +60,15 @@ public class NewsFragment extends Fragment implements AdapterView.OnItemClickLis
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             ArrayList<NewsItem> items = (ArrayList<NewsItem>) resultData.getSerializable(RssService.ITEMS);
+
             if (items != null) {
-                News.get(getActivity().getApplicationContext()).setNews(items);
+                News.get().setNews(items);
                 NewsAdapter adapter = new NewsAdapter(getActivity(), items);
                 listView.setAdapter(adapter);
             } else {
                 Toast.makeText(getActivity(), "Возникла проблема при загрузке RSS ленты", Toast.LENGTH_LONG).show();
             }
+
             progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             getActivity().stopService(new Intent(getActivity(), RssService.class));

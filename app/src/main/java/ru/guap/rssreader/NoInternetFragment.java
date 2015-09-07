@@ -19,7 +19,7 @@ public class NoInternetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_no_internet, container, false);
         textView = (TextView) rootView.findViewById(R.id.no_internet_text_view);
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/RobotoCondensed-Regular.ttf");
+        Typeface custom_font = BaseActivity.getDefaultFont();
         textView.setTypeface(custom_font);
         return rootView;
     }
