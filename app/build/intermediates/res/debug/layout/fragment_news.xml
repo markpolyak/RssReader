@@ -2,23 +2,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main"
+    android:background="@color/white"
     android:orientation="vertical" >
 
-    <ListView
-        android:visibility="gone"
-        android:id="@+id/listView"
-        android:divider="@android:color/transparent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:smoothScrollbar="true"
-        android:scrollingCache="false"
-        android:animationCache="false" />
+        android:background="@color/white"
+        android:orientation="vertical" >
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</RelativeLayout><!-- From: file:/C:/Users/MeatBoy/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/fragment_news.xml -->
+            <ListView
+                android:visibility="gone"
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:smoothScrollbar="true"
+                android:scrollingCache="false"
+                android:animationCache="false" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout><!-- From: file:/E:/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/fragment_news.xml -->

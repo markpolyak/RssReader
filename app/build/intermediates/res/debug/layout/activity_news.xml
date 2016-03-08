@@ -5,4 +5,4 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".NewsActivity"
-    tools:ignore="MergeRootFrame" /><!-- From: file:/C:/Users/MeatBoy/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/activity_news.xml -->
+    tools:ignore="MergeRootFrame" /><!-- From: file:/E:/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/activity_news.xml -->

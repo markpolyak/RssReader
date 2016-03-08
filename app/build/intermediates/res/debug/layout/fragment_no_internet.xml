@@ -13,4 +13,4 @@
         android:textColor="@color/text_color"
         android:text="@string/no_internet" />
 
-</LinearLayout><!-- From: file:/C:/Users/MeatBoy/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/fragment_no_internet.xml -->
+</LinearLayout><!-- From: file:/E:/AndroidStudioWorkspace/RssReader/app/src/main/res/layout/fragment_no_internet.xml -->

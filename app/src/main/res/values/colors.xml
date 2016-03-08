@@ -3,5 +3,8 @@
     <color name="text_color">#455A64</color>
     <color name="button_color">#26A69A</color>
     <color name="white">#FFFFFF</color>
+    <color name="orange_200">#455A64</color>
+    <color name="orange_300">#BBDEFB</color>
+    <color name="orange_400">#FFA726</color>
 
 </resources>
