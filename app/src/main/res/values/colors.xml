@@ -3,8 +3,11 @@
     <color name="text_color">#455A64</color>
     <color name="button_color">#26A69A</color>
     <color name="white">#FFFFFF</color>
-    <color name="orange_200">#455A64</color>
-    <color name="orange_300">#BBDEFB</color>
-    <color name="orange_400">#FFA726</color>
+
+    <color name="red_700">#D32F2F</color>
+
+    <color name="colorPrimary">#125688</color>
+    <color name="colorPrimaryDark">#125688</color>
+    <color name="colorAccent">#c8e8ff</color>
 
 </resources>

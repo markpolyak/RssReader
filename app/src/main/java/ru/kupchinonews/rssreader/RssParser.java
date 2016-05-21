@@ -1,14 +1,8 @@
 package ru.kupchinonews.rssreader;
 
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableWrapper;
-import android.text.Html;
 import android.util.Xml;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -22,9 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by MeatBoy on 30.07.2015.
- */
 public class RssParser {
 
     final String ns = null;
@@ -35,8 +26,10 @@ public class RssParser {
     final String fCreator = "dc:creator";
 
     final String fImageStartTag = "src=\"";
-    final String fDesriptionTagStart = "</div>\r\n\t<p>";
+    final String fDesriptionTag = "</div>\r\n\t<p>";
     final String fDescriptionTitleFinishTag = "\" alt";
+    final String fTagMask = "\\<[^\\>]*\\>";
+    final String fDivTag = "(?s)<div>.*?</div>";
 
     final DateFormat fOldDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss", Locale.ENGLISH);
     final DateFormat fNewDateFormat = new SimpleDateFormat("kk:mm  dd.MM.yyyy", Locale.ENGLISH);
@@ -88,12 +81,10 @@ public class RssParser {
                                     description.indexOf(fDescriptionTitleFinishTag));
                             image = LoadImageFromWebOperations(url);
                         } else {
-                            image = new BitmapDrawable(Resources.getSystem(), BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.booksas));
+                            image = null;
                         }
 
-                        description = description.substring(description.indexOf(fDesriptionTagStart) + fDesriptionTagStart.length(), description.length());
-
-                        //image = new BitmapDrawable(Resources.getSystem(), BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.booksas));
+                        description = description.replaceAll(fDivTag, "").replaceAll(fTagMask, "");
 
                         break;
 
@@ -144,9 +135,7 @@ public class RssParser {
 
     public static Drawable LoadImageFromWebOperations(String url) {
         try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
+            return Drawable.createFromStream((InputStream) new URL(url).getContent(), "src name");
         } catch (Exception e) {
             return null;
         }

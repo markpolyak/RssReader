@@ -1,20 +1,9 @@
 <resources>
-    <string name="app_name">Rss Reader</string>
+    <string name="app_name">Новости Купчино</string>
 
-    <string name="title_section1">Новости</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    <string name="action_settings">Settings</string>
     <string name="title_activity_news">Новости Купчино</string>
     <string name="detail_view_button_text">Подробнее</string>
 
     <string name="no_internet">Отсутствует подключение к интернету</string>
 
-    <string name="scene">Scene</string>
-    <string name="scene_1">1</string>
-    <string name="scene_2">2</string>
-    <string name="scene_3">3</string>
-    <string name="scene_4">4</string>
-    <string name="additional_message">This text fades in.</string>
 </resources>

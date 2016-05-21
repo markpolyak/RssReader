@@ -1,9 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="ru.kupchinonews.rssreader.fragments.NewsFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
@@ -19,6 +22,8 @@
             <ListView
                 android:visibility="gone"
                 android:id="@+id/listView"
+                android:dividerHeight="2dp"
+                android:divider="@drawable/divider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:smoothScrollbar="true"
@@ -26,8 +31,17 @@
                 android:animationCache="false" />
 
             <ProgressBar
+                android:visibility="gone"
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:visibility="gone"
+                android:text="@string/no_internet"
+                android:id="@+id/no_internet_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />
