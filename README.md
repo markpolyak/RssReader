@@ -1,4 +1,4 @@
-# RssReader
+# KupchinoNews
 
 Min api - 8
 
